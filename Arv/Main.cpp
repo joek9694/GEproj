@@ -2,6 +2,44 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
+// -------------------------- Flerfaldigt arv --------------------------------------------------
+
+// se upp med namnkonflikter! problem uppstår vid användning, anrop = tvetydigt.. 
+//tvetydighet avgörs innan kompilatorn kollar skyddsgrad(private osv), problem uppstår alltså
+// även om ena alternativet är publikt och andra privat.
+
+//specificera vilken version av en överskuggad metod som ska användas genom att använda basklasen namn innan
+// Ex:
+// Foo::foobar() istället för bara foobar().
+
+class Person {
+public:
+	Person(string s) : namn(s) {}
+	string get_namn() const { return namn; }
+	void talar() const { cout << "Bla bla.." << endl; }
+private:
+	string namn;
+};
+
+class Varg {
+public:
+	Varg(bool g) : grym(g) {}
+	bool is_grym() const { return grym; }
+	void ylar() const { cout << "Uuuuuu..." << endl; }
+private:
+	bool grym;
+};
+
+class Varulv : public Person, public Varg {
+public:
+	Varulv(string s, bool dödlig) : Person(s), Varg(true), dödlig(dödlig) {}
+	bool is_dödlig() const { return dödlig; }
+private:
+	bool dödlig;
+};
+
+
 // --------------- Implementationsarv, private eller protected ----------------------------------
 
 

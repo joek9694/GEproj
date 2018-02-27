@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Klasser", "Klasser\Klasser.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arv", "Arv\Arv.vcxproj", "{D11E498D-90B2-4A05-AEC6-32A64CC38A0D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cwing", "wing\wing.vcxproj", "{02DE2657-88E0-45A6-9A8F-63C2508B81D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{D11E498D-90B2-4A05-AEC6-32A64CC38A0D}.Release|x64.Build.0 = Release|x64
 		{D11E498D-90B2-4A05-AEC6-32A64CC38A0D}.Release|x86.ActiveCfg = Release|Win32
 		{D11E498D-90B2-4A05-AEC6-32A64CC38A0D}.Release|x86.Build.0 = Release|Win32
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Debug|x64.ActiveCfg = Debug|x64
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Debug|x64.Build.0 = Debug|x64
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Debug|x86.ActiveCfg = Debug|Win32
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Debug|x86.Build.0 = Debug|Win32
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Release|x64.ActiveCfg = Release|x64
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Release|x64.Build.0 = Release|x64
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Release|x86.ActiveCfg = Release|Win32
+		{02DE2657-88E0-45A6-9A8F-63C2508B81D5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
