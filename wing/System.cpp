@@ -30,7 +30,7 @@ namespace cwing {
 		return font;
 	}
 
-	System sys;
+	System sys;		// statiskt object
 }
 
 

@@ -3,7 +3,7 @@
 #include "System.h"
 
 namespace cwing {
-	Label::Label(int x, int y, int w, int h, std::string txt): Component(x,y,w,h), text(text)
+	Label::Label(int x, int y, int w, int h, std::string txt): Component(x,y,w,h), text(txt)
 	{
 		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), text.c_str(), {0,0,0});
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
