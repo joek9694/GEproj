@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 // Konvention: använd INTE 'using namespace' i en header-fil!
+// p.g.a (inkluderas av tillämpningsprogram) man ska inte öppna namespaces för tillämpningar
 
 namespace cwing {
 	class Label: public Component
