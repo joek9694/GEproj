@@ -3,6 +3,8 @@
 #include <SDL_ttf.h>
 #include<SDL_mixer.h>
 
+#include "GameEngine.h"
+
 // Kommentarer = tips!
 
 // 1: Obs! föreläsning 8: statiska objekt -> 
@@ -17,14 +19,13 @@
 
 // 4: Inline funktioner, klassdefinitioner och mallar placeras i headerfiler normalt sett
 
-class GameEngine {
-public:
 
-private:
-};
+using namespace ge;
 
 int main(int argc, char** argv) {
+	GameEngine ge;
 
+	ge.run();
 	return 0;
 };
 
