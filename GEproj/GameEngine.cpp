@@ -1,4 +1,6 @@
 #include "GameEngine.h"
+#include <SDL.h>
+#include "SdlHandler.h"
 
 namespace ge {
 	GameEngine::GameEngine()
@@ -17,6 +19,16 @@ namespace ge {
 				case SDL_QUIT: go = false; break;
 				}//switch
 			}//inre while
+
+			SDL_SetRenderDrawColor(sdlHandler.get_ren(), 255,255,255,255);
+			SDL_RenderClear(sdlHandler.get_ren());
+
+			for (Sprite* s : sprites) {
+				s->tick();
+				s->draw();
+			}
+
+			SDL_RenderPresent(sdlHandler.get_ren());
 		}//yttre while
 	}
 
