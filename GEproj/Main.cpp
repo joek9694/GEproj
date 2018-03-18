@@ -29,6 +29,7 @@ class Sprite1 : public Sprite {
 
 public:
 	Sprite1(SDL_Surface* sur) : Sprite(sur) {}
+	Sprite1(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x,y,w,h,sur) {}
 	void tick() {
 			if (i <=50) {
 				cout << getRect().x << endl;
@@ -40,8 +41,6 @@ public:
 					i = 0;
 				}
 			}
-		
-			
 		i++;
 
 	};
@@ -54,9 +53,14 @@ int main(int argc, char** argv) {
 	GameEngine ge;
 	SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
 
-	
+	SDL_Surface* gubbSurf = SDL_LoadBMP(
+		"c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Gubbe.bmp");
+
 	Sprite1* s = new Sprite1(surf);
 	ge.add(s);
+
+	Sprite1* s2 = new Sprite1(200,100,50,50, gubbSurf);
+	ge.add(s2);
 	ge.setFps(100);
 
 	ge.run();

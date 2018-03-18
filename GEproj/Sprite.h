@@ -9,6 +9,7 @@ namespace ge {
 	{
 	public:
 		~Sprite();
+		static Sprite* getInstance(SDL_Surface*);
 		virtual void draw() const;		// abstrakt funktion ? , som i så fall Måste implementeras i subklass	// = 0 för rent virtuell
 		virtual void tick() { };		// tom funktion... lr?
 		virtual void keyDown(const SDL_Event&);
@@ -22,7 +23,7 @@ namespace ge {
 		Sprite(SDL_Surface* s);
 
 	private: 
-		SDL_Texture * texture;
+		SDL_Texture* texture;
 		SDL_Surface* surf;
 		SDL_Rect rect;
 		Sprite(const Sprite&) = delete;		// Förbjud tilldelning

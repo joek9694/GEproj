@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include <SDL.h>
 #include "SdlHandler.h"
+#include <SDL_image.h>
 
 namespace ge {
 	GameEngine::GameEngine()
@@ -42,6 +43,19 @@ namespace ge {
 				case SDL_KEYDOWN:
 					for (Sprite* s : sprites)
 						s->keyDown(eve);
+					if (eve.key.keysym.sym == SDLK_SPACE) {
+						SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
+						Sprite* s = Sprite::getInstance(surf);
+						sprites.push_back(s);
+					}
+					if (eve.key.keysym.sym == SDLK_BACKSPACE) {
+
+						sprites.clear();
+						/*for (Sprite* s : sprites) {
+							remove(s);
+						}*/
+							
+					}
 					break;
 				}//switch
 			}//inre while
