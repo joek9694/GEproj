@@ -33,6 +33,7 @@ namespace cwing {
 		SDL_Point p = { eve.button.x, eve.button.y };
 		if (SDL_PointInRect(&p, &getRect())) {
 			perform(this);
+			//this->setRectX(15);				// HÄR FIXME
 		}
 		isDown = false;
 	}

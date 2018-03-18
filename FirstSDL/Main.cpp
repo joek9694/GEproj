@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
 			SDL_Delay(delay);
 
 
-	}// while
+	}// while - HuvudLoop
 	SDL_DestroyTexture(pacTx);
 	Mix_FreeChunk(musik);
 	TTF_CloseFont(font);

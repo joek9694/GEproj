@@ -11,11 +11,13 @@ namespace ge {
 
 		void add(Sprite* s);
 		void remove(Sprite* s);
+		void setFps(int newFps) { fps = newFps; };
 		void run();
 		~GameEngine();
 
 	private:
 		std::vector<Sprite*> sprites;		//Datasamling 
+		int fps = 1000;
 	};
 }
 

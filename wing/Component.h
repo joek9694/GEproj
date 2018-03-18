@@ -12,6 +12,7 @@ namespace cwing {
 		virtual void keyUp(const SDL_Event&) {};
 		virtual void draw() const = 0;	// = 0 innebär abstrakt funktion, varje subklass Måste implementera den
 		const SDL_Rect& getRect() const { return rect; }
+		void setRectX(int x) { rect = { x, rect.y, rect.w, rect.y }; };			// TEST
 	protected:
 		Component(int x, int y, int w, int h);		// Protected så att det inte går att skapa object av denna klass utanför klasshierarkin.
 	private:
