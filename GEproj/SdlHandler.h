@@ -12,7 +12,7 @@ namespace ge {
 		~SdlHandler();
 		SDL_Renderer* get_ren() const;
 	private:
-		SDL_Window * win;
+		SDL_Window* win;
 		SDL_Renderer* ren;
 	};
 

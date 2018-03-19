@@ -63,7 +63,14 @@ namespace ge {
 			SDL_SetRenderDrawColor(sdlHandler.get_ren(), 255,255,255,255);
 			SDL_RenderClear(sdlHandler.get_ren());
 
+			Sprite* s1 = sprites[0];
+			Sprite* s2 = sprites[1];
+			if (s1->collision(s2)) {
+				std::cout << "javisst" << std::endl;
+			}
+
 			for (Sprite* s : sprites) {
+				
 				s->tick();
 				s->draw();
 			}

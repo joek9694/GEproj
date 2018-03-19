@@ -45,6 +45,30 @@ namespace ge {
 		}
 	}
 
+	bool Sprite::collision(const Sprite * s) const
+	{
+		
+		/*
+		Inte färdigt... kollar bara under rätt förutsättning... 
+rektanglar kan ju vara olika stora..
+
+		int leftX = rect.x;
+		int rightX = rect.x + rect.w;
+		int upperY = rect.y;
+		int lowerY = rect.y + rect.h;
+		bool withinX = s->rect.x <= rightX && s->rect.x >= leftX;
+		bool withinY = s->rect.y >= upperY && s->rect.y <= lowerY;
+		if (withinX && withinY) {
+			return true;
+		}
+		*/
+		SDL_Rect r = s->getRect();
+		if (SDL_HasIntersection(&rect, &r)) {
+			return true;
+		}
+		return false;
+	}
+
 
 
 	

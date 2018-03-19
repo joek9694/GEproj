@@ -13,6 +13,7 @@ namespace ge {
 		virtual void draw() const;		// abstrakt funktion ? , som i så fall Måste implementeras i subklass	// = 0 för rent virtuell
 		virtual void tick() { };		// tom funktion... lr?
 		virtual void keyDown(const SDL_Event&);
+		bool collision(const Sprite*) const;
 		const SDL_Rect& getRect() const{ return rect; }
 		void setRectX(int x) { rect = {x, rect.y, rect.w, rect.h }; };
 		void setRectY(int y) { rect = {rect.x, y, rect.w, rect.h }; };
