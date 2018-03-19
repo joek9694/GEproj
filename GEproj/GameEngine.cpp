@@ -43,11 +43,14 @@ namespace ge {
 				case SDL_KEYDOWN:
 					for (Sprite* s : sprites)
 						s->keyDown(eve);
+					// ----------------- TEMPORÄR---------------------------------
 					if (eve.key.keysym.sym == SDLK_SPACE) {
 						SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
 						Sprite* s = Sprite::getInstance(surf);
 						sprites.push_back(s);
 					}
+					// ------------------------------------------------------------
+					// ----------------- TEMPORÄR---------------------------------
 					if (eve.key.keysym.sym == SDLK_BACKSPACE) {
 
 						sprites.clear();
@@ -56,6 +59,7 @@ namespace ge {
 						}*/
 							
 					}
+					// ------------------------------------------------------------
 					break;
 				}//switch
 			}//inre while
@@ -63,11 +67,13 @@ namespace ge {
 			SDL_SetRenderDrawColor(sdlHandler.get_ren(), 255,255,255,255);
 			SDL_RenderClear(sdlHandler.get_ren());
 
+			// ----------------- TEMPORÄRT BEVIS ---------------------------------
 			Sprite* s1 = sprites[0];
 			Sprite* s2 = sprites[1];
 			if (s1->collision(s2)) {
 				std::cout << "javisst" << std::endl;
 			}
+			// --------------------------------------------------------------------
 
 			for (Sprite* s : sprites) {
 				
