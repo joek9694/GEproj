@@ -31,6 +31,7 @@ namespace ge {
 	void GameEngine::run()
 	{
 		bool go = true;
+		bool active = false;
 		const int tickInterval = 1000 / fps;
 
 		while (go) {
@@ -46,8 +47,9 @@ namespace ge {
 					// ----------------- TEMPORÄR---------------------------------
 					if (eve.key.keysym.sym == SDLK_SPACE) {
 						SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
-						Sprite* s = Sprite::getInstance(surf);
-						sprites.push_back(s);
+						//Sprite* s = Sprite::getInstance(surf);
+						//sprites.push_back(s);
+						SDL_FreeSurface(surf);
 					}
 					// ------------------------------------------------------------
 					// ----------------- TEMPORÄR---------------------------------
@@ -67,16 +69,23 @@ namespace ge {
 			SDL_SetRenderDrawColor(sdlHandler.get_ren(), 255,255,255,255);
 			SDL_RenderClear(sdlHandler.get_ren());
 
-			// ----------------- TEMPORÄRT BEVIS ---------------------------------
-			Sprite* s1 = sprites[0];
-			Sprite* s2 = sprites[1];
-			if (s1->collision(s2)) {
-				std::cout << "javisst" << std::endl;
+			std::vector<Sprite*> sprites2 = sprites;
+			while(sprites2.capacity() != 0 && active) {
+				Sprite* s1 = sprites[0];
+				Sprite* s2 = sprites[1];
+				
+				active = false;
+				if (s1->collision(s2)) {
+					std::cout << "javisst" << std::endl;
+					s1 ->perform(s1);
+					active = true;
+				}
 			}
+			// ----------------- TEMPORÄRT BEVIS ---------------------------------
+			
 			// --------------------------------------------------------------------
 
 			for (Sprite* s : sprites) {
-				
 				s->tick();
 				s->draw();
 			}
@@ -86,6 +95,7 @@ namespace ge {
 			int delay = nextTick - SDL_GetTicks();
 			if (delay > 0)
 				SDL_Delay(delay);
+			active = true;
 		}//yttre while
 	}
 

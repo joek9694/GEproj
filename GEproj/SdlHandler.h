@@ -10,6 +10,7 @@ namespace ge {
 	public:
 		SdlHandler();
 		~SdlHandler();
+		SDL_Window* get_win() const;
 		SDL_Renderer* get_ren() const;
 	private:
 		SDL_Window* win;

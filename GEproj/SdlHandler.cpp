@@ -18,6 +18,11 @@ namespace ge {
 		SDL_Quit();
 	}
 
+	SDL_Window* SdlHandler::get_win() const
+	{
+		return win;
+	}
+
 	SDL_Renderer* SdlHandler::get_ren() const
 	{
 		return ren;

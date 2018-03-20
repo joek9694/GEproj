@@ -28,21 +28,12 @@ namespace ge {
 	}
 
 	//------------------------------metoder------------------------------------
-	Sprite* Sprite::getInstance(SDL_Surface* s) {
-		return new Sprite(s);
-	}
+	//Sprite* Sprite::getInstance(SDL_Surface* s) {
+	//	return new Sprite(s);
+	//}
 
 	void Sprite::draw() const {
 		SDL_RenderCopy(sdlHandler.get_ren(), texture, NULL, &rect);
-	}
-
-	void Sprite::keyDown(const SDL_Event& eve) {
-		switch (eve.key.keysym.sym) {
-		case SDLK_RIGHT: rect.x ++; break;
-		case SDLK_LEFT: rect.x--; break;
-		case SDLK_UP: rect.y--; break;
-		case SDLK_DOWN: rect.y++; break;
-		}
 	}
 
 	bool Sprite::collision(const Sprite * s) const
