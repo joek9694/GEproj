@@ -30,9 +30,8 @@ public:
 	Sprite1(SDL_Surface* sur) : Sprite(sur) {}
 	Sprite1(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
 	virtual void keyDown(const SDL_Event&) {};
-	void tick() {
+	void tick(GameEngine& G_E) {
 		if (moveInverter) {
-
 			if (i <= 50) {
 				//cout << getRect().x << endl;
 				setRectX(getRect().x - 2);
@@ -80,7 +79,7 @@ public:
 	Sprite2(SDL_Surface* sur) : Sprite(sur) {}
 	Sprite2(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
 	virtual void keyDown(const SDL_Event&) {};
-	void tick() {
+	void tick(GameEngine* G_E) {
 		if (i <= 430) {
 			//cout << getRect().x << endl;
 			setRectX(getRect().x + 2);
@@ -139,9 +138,8 @@ class Player : public Sprite {
 public:
 	Player(SDL_Surface* sur) : Sprite(sur) {}
 	Player(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
-	void tick() {
-
-	};
+	
+	void tick(GameEngine* G_E) {};
 
 	void Sprite::keyDown(const SDL_Event& eve) {
 		switch (eve.key.keysym.sym) {
@@ -172,10 +170,18 @@ public:
 	Ball(int x, int y, int w, int h, SDL_Surface* sur, Player* p, Sprite2* s2)
 		: Sprite(x, y, w, h, sur), p(p), comp(s2) {
 	}
-	virtual void keyDown(const SDL_Event&) {};
+	virtual void keyDown(const SDL_Event& eve) {/*
+		if (eve.key.keysym.sym == SDLK_SPACE) {
+			SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
+			Sprite2 * s = new Sprite2(590, 300, 200, 200, surf);
+			sprites.push_back(s);
+			SDL_FreeSurface(surf);
+		}
+		*/
+	};
 
-	void tick() {
-		if (getRect().y <= 1000 && getRect().y >= 0) {
+	void tick(GameEngine* G_E) {
+		if (getRect().y <= 700 && getRect().y >= 0) {
 			if (getRect().x >= 950 || getRect().x <= 0) {
 				horizontal_speed = horizontal_speed * -1;
 				setRectX(getRect().x + (horizontal_speed / 10));
@@ -183,6 +189,12 @@ public:
 
 			if (collision(p)) {
 				moveInverter = true;
+				// --------------------------------------- TEMPORÄRT-----------------------------------------------------------
+				//SDL_Surface* ball = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom2.png");
+				//Sprite2* b = new Sprite2(590, 300, 200, 200, ball);
+				//G_E->add(b);
+				//SDL_FreeSurface(ball);
+				//----------------------------------------------------------------------------------------------------------------
 			}
 			if (collision(comp)) {
 				moveInverter = false;
@@ -213,9 +225,6 @@ public:
 				p -> score();
 			}
 		}
-
-		// Reset???
-
 	};
 
 	void perform(Sprite* source) {

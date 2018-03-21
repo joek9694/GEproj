@@ -5,13 +5,15 @@
 #include<string.h>
 
 namespace ge {
+	class GameEngine;
+	
 	class Sprite
 	{
 	public:
 		~Sprite();
 		//static Sprite* getInstance(SDL_Surface*);
 		virtual void draw() const;		// abstrakt funktion ? , som i så fall Måste implementeras i subklass	// = 0 för rent virtuell
-		virtual void tick() { };		// tom funktion... lr?
+		virtual void tick(GameEngine*) = 0;		// tom funktion... lr?
 		virtual void perform(Sprite* source) {};
 		virtual void keyDown(const SDL_Event&)=0;
 		bool collision(const Sprite*) const;

@@ -55,10 +55,10 @@ namespace ge {
 					// ----------------- TEMPORÄR---------------------------------
 					if (eve.key.keysym.sym == SDLK_BACKSPACE) {
 
-						sprites.clear();
-						/*for (Sprite* s : sprites) {
-							remove(s);
-						}*/
+						//sprites.clear();
+						
+						remove(sprites[0]);
+						
 							
 					}
 					// ------------------------------------------------------------
@@ -69,24 +69,13 @@ namespace ge {
 			SDL_SetRenderDrawColor(sdlHandler.get_ren(), 255,255,255,255);
 			SDL_RenderClear(sdlHandler.get_ren());
 
-			std::vector<Sprite*> sprites2 = sprites;
-			while(sprites2.capacity() != 0 && active) {
-				Sprite* s1 = sprites[0];
-				Sprite* s2 = sprites[1];
-				
-				active = false;
-				if (s1->collision(s2)) {
-					std::cout << "javisst" << std::endl;
-					s1 ->perform(s1);
-					active = true;
-				}
-			}
 			// ----------------- TEMPORÄRT BEVIS ---------------------------------
-			
+
 			// --------------------------------------------------------------------
 
 			for (Sprite* s : sprites) {
-				s->tick();
+				auto temp = this;
+				s->tick(temp);
 				s->draw();
 			}
 

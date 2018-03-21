@@ -9,8 +9,8 @@ namespace ge {
 	public:
 		GameEngine();		//Behövs?
 
-		void add(Sprite* s);
-		void remove(Sprite* s);
+		void add(Sprite*);
+		void remove(Sprite*);
 		void setFps(int newFps) { fps = newFps; };
 		void run();
 		~GameEngine();
