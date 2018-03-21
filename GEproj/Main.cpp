@@ -4,7 +4,6 @@
 #include<SDL_mixer.h>
 #include<iostream>
 
-
 #include "GameEngine.h"
 #include "SdlHandler.h"
 // Kommentarer = tips!
@@ -82,22 +81,28 @@ public:
 	Sprite2(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
 	virtual void keyDown(const SDL_Event&) {};
 	void tick() {
-		if (i <= 475) {
+		if (i <= 430) {
 			//cout << getRect().x << endl;
-			setRectX(getRect().x + 1);
+			setRectX(getRect().x + 2);
 		}
-		else if (i <= 950) {
+		else if (i <= 860) {
 			//cout << getRect().x << endl;
-			setRectX(getRect().x - 1);
+			setRectX(getRect().x - 2);
 		}
-		if (i == 950) {
+		if (i == 860) {
 			i = 0;
 		}
 		i++;
 
 	};
+	void score() {
+		s++;
+		cout << "Computer: " << endl;
+		cout << s << endl;
+	}
 private:
 	int i = 0;
+	int s = 0;
 
 };
 /*
@@ -140,15 +145,22 @@ public:
 
 	void Sprite::keyDown(const SDL_Event& eve) {
 		switch (eve.key.keysym.sym) {
-		case SDLK_RIGHT: setRectX(getRect().x + 1); break;
-		case SDLK_LEFT: setRectX(getRect().x - 1); break;
-		case SDLK_UP: setRectY(getRect().y - 1); break;
-		case SDLK_DOWN: setRectY(getRect().y + 1); break;
+		case SDLK_RIGHT: setRectX(getRect().x + 5); break;
+		case SDLK_LEFT: setRectX(getRect().x - 5); break;
+		case SDLK_UP: setRectY(getRect().y - 5); break;
+		case SDLK_DOWN: setRectY(getRect().y + 5); break;
 		}
+	}
+
+	void score() {
+		s++;
+		cout << "Player: " << endl;
+		cout << s << endl;
 	}
 
 private:
 	int i = 0;
+	int s = 0;
 
 };
 
@@ -164,11 +176,21 @@ public:
 
 	void tick() {
 		if (getRect().y <= 1000 && getRect().y >= 0) {
+			if (getRect().x >= 950 || getRect().x <= 0) {
+				horizontal_speed = horizontal_speed * -1;
+				setRectX(getRect().x + (horizontal_speed / 10));
+			}
+
 			if (collision(p)) {
 				moveInverter = true;
 			}
 			if (collision(comp)) {
 				moveInverter = false;
+				int cX = comp -> getRect().x;
+				int cW = comp -> getRect().w;
+				int cMid = cX + (cW / 2);
+				horizontal_speed = midPos - cMid;
+
 			}
 			if (moveInverter) {
 				setRectY(getRect().y - 2);
@@ -176,9 +198,23 @@ public:
 			else {
 				setRectY(getRect().y + 2);
 			}
+
+			setRectX(getRect().x + (horizontal_speed / 10));
 			i++;
 		}
+		else {
+			moveInverter = !moveInverter;
+			if (moveInverter) {
+				setRectY(getRect().y - 2);
+				comp -> score();
+			}
+			else {
+				setRectY(getRect().y + 2);
+				p -> score();
+			}
+		}
 
+		// Reset???
 
 	};
 
@@ -188,6 +224,8 @@ public:
 private:
 	int i = 0;
 	bool moveInverter = false;
+	int midPos = getRect().x + (getRect().w / 2);
+	int horizontal_speed = 0;
 	Player* p;
 	Sprite2* comp;
 
@@ -204,9 +242,9 @@ int main(int argc, char** argv) {
 	//	"c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Gubbe.bmp");
 
 	SDL_Surface* sUPP = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Uppknapp.png");
-	SDL_Surface* sNER = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Nerknapp.png");
+	SDL_Surface* sNER = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ner2.png");
 	SDL_Surface* pNER = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Nerknapp.png");
-	SDL_Surface* pUPP = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Uppknapp.png");
+	SDL_Surface* pUPP = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Upp2.png");
 	SDL_Surface* ball = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ball.png");
 
 
@@ -216,13 +254,13 @@ int main(int argc, char** argv) {
 	Sprite2* s2 = new Sprite2(0, 0, 50, 50, sNER);
 	ge.add(s2);
 
-	Player* p = new Player(middle, 650, 50, 50, pUPP);
+	Player* p = new Player(middle, 700, 50, 50, pUPP);
 	ge.add(p);
 
 	Ball* b = new Ball(590, 300, 200, 200, ball, p, s2);
 	ge.add(b);
 
-	ge.setFps(70);
+	ge.setFps(100);
 
 
 	// -----------------OBS!!!!!------------------ 
