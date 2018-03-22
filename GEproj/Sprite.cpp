@@ -1,6 +1,5 @@
 #include "Sprite.h"
 #include "SdlHandler.h"
-//#include "GameEngine.h"
 
 
 namespace ge {
@@ -23,15 +22,13 @@ namespace ge {
 		SDL_FreeSurface(s);
 	}
 
-	//-----------------------------destruktor-----------------------------------
+	//-----------------------------destruktor---------------------------------
 	Sprite::~Sprite()
 	{
+		SDL_DestroyTexture(texture);
 	}
 
 	//------------------------------metoder------------------------------------
-	//Sprite* Sprite::getInstance(SDL_Surface* s) {
-	//	return new Sprite(s);
-	//}
 
 	void Sprite::draw() const {
 		SDL_RenderCopy(sdlHandler.get_ren(), texture, NULL, &rect);
@@ -39,21 +36,6 @@ namespace ge {
 
 	bool Sprite::collision(const Sprite * s) const
 	{
-		
-		/*
-		Inte färdigt... kollar bara under rätt förutsättning... 
-rektanglar kan ju vara olika stora..
-
-		int leftX = rect.x;
-		int rightX = rect.x + rect.w;
-		int upperY = rect.y;
-		int lowerY = rect.y + rect.h;
-		bool withinX = s->rect.x <= rightX && s->rect.x >= leftX;
-		bool withinY = s->rect.y >= upperY && s->rect.y <= lowerY;
-		if (withinX && withinY) {
-			return true;
-		}
-		*/
 		SDL_Rect r = s->getRect();
 		if (SDL_HasIntersection(&rect, &r)) {
 			return true;

@@ -37,30 +37,15 @@ namespace ge {
 		while (go) {
 			Uint32 nextTick = SDL_GetTicks() + tickInterval;
 			SDL_Event eve;
+			auto temp = this;
 			while (SDL_PollEvent(&eve)) {
 				switch (eve.type) {
 				case SDL_QUIT: go = false; break;
 
 				case SDL_KEYDOWN:
 					for (Sprite* s : sprites)
-						s->keyDown(eve);
-					// ----------------- TEMPORÄR---------------------------------
-					if (eve.key.keysym.sym == SDLK_SPACE) {
-						SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
-						//Sprite* s = Sprite::getInstance(surf);
-						//sprites.push_back(s);
-						SDL_FreeSurface(surf);
-					}
-					// ------------------------------------------------------------
-					// ----------------- TEMPORÄR---------------------------------
-					if (eve.key.keysym.sym == SDLK_BACKSPACE) {
-
-						//sprites.clear();
-						
-						remove(sprites[0]);
-						
-							
-					}
+						s->keyDown(eve, temp);
+					
 					// ------------------------------------------------------------
 					break;
 				}//switch
@@ -74,7 +59,7 @@ namespace ge {
 			// --------------------------------------------------------------------
 
 			for (Sprite* s : sprites) {
-				auto temp = this;
+				
 				s->tick(temp);
 				s->draw();
 			}

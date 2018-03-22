@@ -11,11 +11,10 @@ namespace ge {
 	{
 	public:
 		~Sprite();
-		//static Sprite* getInstance(SDL_Surface*);
-		virtual void draw() const;		// abstrakt funktion ? , som i så fall Måste implementeras i subklass	// = 0 för rent virtuell
-		virtual void tick(GameEngine*) = 0;		// tom funktion... lr?
+		virtual void draw() const;
+		virtual void tick(GameEngine*) = 0;
 		virtual void perform(Sprite* source) {};
-		virtual void keyDown(const SDL_Event&)=0;
+		virtual void keyDown(const SDL_Event&, GameEngine*)=0;
 		bool collision(const Sprite*) const;
 		const SDL_Rect& getRect() const{ return rect; }
 		void setRectX(int x) { rect = {x, rect.y, rect.w, rect.h }; };

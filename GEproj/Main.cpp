@@ -78,7 +78,7 @@ class Sprite2 : public Sprite {
 public:
 	Sprite2(SDL_Surface* sur) : Sprite(sur) {}
 	Sprite2(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
-	virtual void keyDown(const SDL_Event&) {};
+	virtual void keyDown(const SDL_Event&, GameEngine* G_E) {};
 	void tick(GameEngine* G_E) {
 		if (i <= 430) {
 			//cout << getRect().x << endl;
@@ -141,7 +141,7 @@ public:
 	
 	void tick(GameEngine* G_E) {};
 
-	void Sprite::keyDown(const SDL_Event& eve) {
+	void Sprite::keyDown(const SDL_Event& eve, GameEngine* G_E) {
 		switch (eve.key.keysym.sym) {
 		case SDLK_RIGHT: setRectX(getRect().x + 5); break;
 		case SDLK_LEFT: setRectX(getRect().x - 5); break;
@@ -170,23 +170,10 @@ public:
 	Ball(int x, int y, int w, int h, SDL_Surface* sur, Player* p, Sprite2* s2)
 		: Sprite(x, y, w, h, sur), p(p), comp(s2) {
 	}
-	virtual void keyDown(const SDL_Event& eve) {/*
-		if (eve.key.keysym.sym == SDLK_SPACE) {
-			SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
-			Sprite2 * s = new Sprite2(590, 300, 200, 200, surf);
-			sprites.push_back(s);
-			SDL_FreeSurface(surf);
-		}
-		*/
+	virtual void keyDown(const SDL_Event& eve, GameEngine* G_E) {
 	};
 
 	void addBall(GameEngine* G_E) {
-		
-		SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ball.png");
-		Sprite2* b = new Sprite2(590, 300, 200, 200, surf);
-		G_E->add(b);
-		SDL_FreeSurface(surf);
-
 	}
 
 	void tick(GameEngine* G_E) {
@@ -198,15 +185,8 @@ public:
 				horizontal_speed = horizontal_speed * -1;
 				setRectX(getRect().x + (horizontal_speed / 10));
 			}
-
 			if (collision(p)) {
 				moveInverter = true;
-				// --------------------------------------- TEMPORÄRT-----------------------------------------------------------
-				//SDL_Surface* ball = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom2.png");
-				//Sprite2* b = new Sprite2(590, 300, 200, 200, ball);
-				//G_E->add(b);
-				//SDL_FreeSurface(ball);
-				//----------------------------------------------------------------------------------------------------------------
 			}
 			if (collision(comp)) {
 				moveInverter = false;
@@ -257,26 +237,44 @@ private:
 	Sprite2* comp;
 
 };
+// ------------------------------------mainBall-------------------------------
+
+class MainBall : Ball
+{
+public:
+	virtual void keyDown(const SDL_Event& eve, GameEngine* G_E) {
+
+		if (eve.key.keysym.sym == SDLK_BACKSPACE) {
+			for (Ball* b : balls) {
+				G_E->remove(b);
+			}
+			balls.clear();
+
+		}
+	};
+
+	void addBall(GameEngine* G_E) {
+
+		SDL_Surface* ball = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ball.png");
+		Ball* b = new Ball(590, 300, 200, 200, ball, NULL, NULL);
+		G_E->add(b);
+		balls.push_back(b);
+		SDL_FreeSurface(ball);
+
+	};
+private:
+	std::vector<Ball*> balls;
+};
 
 // ----------------------------------------------------- main---------------------------------
 
 int main(int argc, char** argv) {
 	GameEngine ge;
 	int middle = 237;
-	//SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/genom3.png");
 
-	//SDL_Surface* gubbSurf = SDL_LoadBMP(
-	//	"c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Gubbe.bmp");
-
-	SDL_Surface* sUPP = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Uppknapp.png");
 	SDL_Surface* sNER = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ner2.png");
-	SDL_Surface* pNER = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Nerknapp.png");
 	SDL_Surface* pUPP = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Upp2.png");
 	SDL_Surface* ball = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ball.png");
-
-
-	//Sprite1* s = new Sprite1(0,0, 200,200,sUPP);
-	//ge.add(s);
 
 	Sprite2* s2 = new Sprite2(0, 0, 50, 50, sNER);
 	ge.add(s2);
