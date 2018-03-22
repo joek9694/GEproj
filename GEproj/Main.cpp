@@ -30,7 +30,7 @@ public:
 	Sprite1(SDL_Surface* sur) : Sprite(sur) {}
 	Sprite1(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
 	virtual void keyDown(const SDL_Event&) {};
-	void tick(GameEngine& G_E) {
+	void tick(GameEngine* G_E) {
 		if (moveInverter) {
 			if (i <= 50) {
 				//cout << getRect().x << endl;
@@ -180,8 +180,20 @@ public:
 		*/
 	};
 
+	void addBall(GameEngine* G_E) {
+		
+		SDL_Surface* surf = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ball.png");
+		Sprite2* b = new Sprite2(590, 300, 200, 200, surf);
+		G_E->add(b);
+		SDL_FreeSurface(surf);
+
+	}
+
 	void tick(GameEngine* G_E) {
 		if (getRect().y <= 700 && getRect().y >= 0) {
+			if (i == 800){
+				addBall(G_E);
+			}
 			if (getRect().x >= 950 || getRect().x <= 0) {
 				horizontal_speed = horizontal_speed * -1;
 				setRectX(getRect().x + (horizontal_speed / 10));
@@ -212,7 +224,13 @@ public:
 			}
 
 			setRectX(getRect().x + (horizontal_speed / 10));
-			i++;
+			if (i == 1000) {
+				i = 0;
+			}
+			else {
+				i++;
+			}
+			
 		}
 		else {
 			moveInverter = !moveInverter;
