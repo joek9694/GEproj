@@ -3,8 +3,10 @@
 #include "SdlHandler.h"
 #include <SDL_image.h>
 
+
+
 namespace ge {
-	GameEngine::GameEngine()
+	GameEngine::GameEngine(GameRules* rules): rules(rules)
 	{
 	}
 
@@ -13,18 +15,29 @@ namespace ge {
 		sprites.push_back(s);
 	}
 
+	//deletes 1 sprite from Sprites
 	void GameEngine::remove(Sprite* s) 
 	{
+		int count = 0;
 		int i = 0;
-		for (Sprite* spr : sprites) {
-			if (s == spr) {				//Jämförelse operator korrekt??		Implementera operator== i Sprite ?!
-				delete s;				// Syntax för delete???
-				sprites.erase(sprites.begin() + i);
+		bool found = false;
+		while (!found && i < sprites.size()) {
+			Sprite* temp = sprites[i];
+
+			if (temp == s) {
+				sprites.erase(sprites.begin() + i);	//sprites.begin() + i
+				// dealloc... delete själva objektet
+				//(GameRules::Sprite1 *)
+				delete dynamic_cast<GameRules::Sprite1*>(temp);
+				found = true;
 			}
-				
-			i++;
+			else {
+				i++;
+			}
+			count++;
 		}
 		
+			//std::cout << sprites.size() << std::endl;		//sprites = innehåller bara spelare, dator och boll
 
 	}
 
@@ -46,17 +59,12 @@ namespace ge {
 					for (Sprite* s : sprites)
 						s->keyDown(eve, temp);
 					
-					// ------------------------------------------------------------
 					break;
 				}//switch
 			}//inre while
 
 			SDL_SetRenderDrawColor(sdlHandler.get_ren(), 255,255,255,255);
 			SDL_RenderClear(sdlHandler.get_ren());
-
-			// ----------------- TEMPORÄRT BEVIS ---------------------------------
-
-			// --------------------------------------------------------------------
 
 			for (Sprite* s : sprites) {
 				
@@ -65,6 +73,8 @@ namespace ge {
 			}
 
 			SDL_RenderPresent(sdlHandler.get_ren());
+
+			rules->special(this);
 
 			int delay = nextTick - SDL_GetTicks();
 			if (delay > 0)
@@ -75,6 +85,7 @@ namespace ge {
 
 	GameEngine::~GameEngine()
 	{
+
 	}
 }
 

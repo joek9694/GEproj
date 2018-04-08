@@ -2,12 +2,13 @@
 #define GAMEENGINE_H
 #include <vector>
 #include "Sprite.h"
+#include "GameRules.h"
 
 namespace ge {
 	class GameEngine
 	{
 	public:
-		GameEngine();		//Behövs?
+		GameEngine(GameRules* rules);		//Behövs?
 
 		void add(Sprite*);
 		void remove(Sprite*);
@@ -17,6 +18,7 @@ namespace ge {
 
 	private:
 		std::vector<Sprite*> sprites;		//Datasamling 
+		GameRules* rules;
 		int fps = 1000;
 	};
 }

@@ -26,6 +26,8 @@ namespace ge {
 	Sprite::~Sprite()
 	{
 		SDL_DestroyTexture(texture);
+		//delete &rect;		// Behövs?
+		
 	}
 
 	//------------------------------metoder------------------------------------

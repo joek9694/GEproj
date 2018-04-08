@@ -6,72 +6,11 @@
 
 #include "GameEngine.h"
 #include "SdlHandler.h"
-// Kommentarer = tips!
-
-// 1: Obs! föreläsning 8: statiska objekt -> 
-//35 min till 38 min på föreläsningsinspelning
-//kan användas för t.ex. sdl:init() och sdl:quit(), före respektive efter main().
-
-// 2: Skriv alltid const i funktionshuvudet när du har en funktion som inte förändrar objektet!
-// Allså const både i deklaration och definition!
-// gäller endast icke-statiska medlemsfunktioner...
-
-// 3: Vanliga funktioner FÅR INTE definieras i headerfiler, utan Måste definieras i cpp-filer
-
-// 4: Inline funktioner, klassdefinitioner och mallar placeras i headerfiler normalt sett
 
 
 using namespace ge;
 using namespace std;
-// ---------------------------------Sprite1------------------------------------------------
-class Sprite1 : public Sprite {
 
-public:
-	Sprite1(SDL_Surface* sur) : Sprite(sur) {}
-	Sprite1(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
-	virtual void keyDown(const SDL_Event&) {};
-	void tick(GameEngine* G_E) {
-		if (moveInverter) {
-			if (i <= 50) {
-				//cout << getRect().x << endl;
-				setRectX(getRect().x - 2);
-			}
-			else if (i <= 100) {
-				//cout << getRect().x << endl;
-				setRectX(getRect().x - 2);
-				if (i == 100) {
-					i = 0;
-					moveInverter = false;
-				}
-			}
-
-		}
-		else {
-			if (i <= 50) {
-				//cout << getRect().x << endl;
-				setRectX(getRect().x + 1);
-			}
-			else if (i <= 100) {
-				//cout << getRect().x << endl;
-				setRectX(getRect().x - 1);
-				if (i == 100) {
-					i = 0;
-				}
-			}
-		}
-		i++;
-
-	};
-
-	void perform(Sprite* source) {
-		setRectX(getRect().x - 1);
-		moveInverter = true;
-	}
-private:
-	int i = 0;
-	bool moveInverter = false;
-
-};
 // ----------------------Experiment-------------------------------------
 class Sprite2 : public Sprite {
 
@@ -104,34 +43,6 @@ private:
 	int s = 0;
 
 };
-/*
-class Sprite2 : public Sprite {
-
-public:
-Sprite2(SDL_Surface* sur) : Sprite(sur) {}
-Sprite2(int x, int y, int w, int h, SDL_Surface* sur) : Sprite(x, y, w, h, sur) {}
-virtual void keyDown(const SDL_Event&) {};
-void tick() {
-if (i <= 475) {
-//cout << getRect().x << endl;
-setRectX(getRect().x + 1);
-}
-else if (i <= 950) {
-//cout << getRect().x << endl;
-setRectX(getRect().x - 1);
-}
-if (i == 950) {
-i = 0;
-}
-i++;
-
-};
-private:
-int i = 0;
-
-};*/
-
-
 // ----------------------------------------Player----------------------------------------
 class Player : public Sprite {
 
@@ -173,14 +84,9 @@ public:
 	virtual void keyDown(const SDL_Event& eve, GameEngine* G_E) {
 	};
 
-	void addBall(GameEngine* G_E) {
-	}
-
 	void tick(GameEngine* G_E) {
 		if (getRect().y <= 700 && getRect().y >= 0) {
-			if (i == 800){
-				addBall(G_E);
-			}
+
 			if (getRect().x >= 950 || getRect().x <= 0) {
 				horizontal_speed = horizontal_speed * -1;
 				setRectX(getRect().x + (horizontal_speed / 10));
@@ -227,6 +133,8 @@ public:
 
 	void perform(Sprite* source) {
 	}
+protected:
+
 
 private:
 	int i = 0;
@@ -237,93 +145,44 @@ private:
 	Sprite2* comp;
 
 };
-// ------------------------------------mainBall-------------------------------
 
-class MainBall : Ball
-{
-public:
-	virtual void keyDown(const SDL_Event& eve, GameEngine* G_E) {
-
-		if (eve.key.keysym.sym == SDLK_BACKSPACE) {
-			for (Ball* b : balls) {
-				G_E->remove(b);
-			}
-			balls.clear();
-
-		}
-	};
-
-	void addBall(GameEngine* G_E) {
-
-		SDL_Surface* ball = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ball.png");
-		Ball* b = new Ball(590, 300, 200, 200, ball, NULL, NULL);
-		G_E->add(b);
-		balls.push_back(b);
-		SDL_FreeSurface(ball);
-
-	};
-private:
-	std::vector<Ball*> balls;
-};
 
 // ----------------------------------------------------- main---------------------------------
 
 int main(int argc, char** argv) {
-	GameEngine ge;
+	/*
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	int * intPtr = new int;
+	*intPtr = 10;
+	cout << intPtr << " " << *intPtr << endl;
+	*/
+	GameRules* gr = new GameRules();
+	GameEngine* ge = new GameEngine(gr);
 	int middle = 237;
+	
+	// Original filepath
+	//c:Prog3/inlupp/images/
 
-	SDL_Surface* sNER = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ner2.png");
-	SDL_Surface* pUPP = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Upp2.png");
-	SDL_Surface* ball = IMG_Load("c:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ball.png");
+	SDL_Surface* sNER = IMG_Load("C:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Ner2.png");
+	SDL_Surface* pUPP = IMG_Load("C:/Users/Johan.Eklundh/Desktop/Visual Studio/workspace/prog3_GEproj/images and sounds/Upp2.png");
+	SDL_Surface* ball = IMG_Load("C:/Users/Johan.Eklundh/Desktop/Prog3/inlupp/images/Ball.png");
+	//C:\Users\Johan.Eklundh\Desktop\Prog3\inlupp\images
+	//SDL_Surface* ball2 = IMG_Load("c:Prog3/inlupp/images/Ball2.png");
+
+	
 
 	Sprite2* s2 = new Sprite2(0, 0, 50, 50, sNER);
-	ge.add(s2);
+	ge ->add(s2);
 
 	Player* p = new Player(middle, 700, 50, 50, pUPP);
-	ge.add(p);
+	ge ->add(p);
 
 	Ball* b = new Ball(590, 300, 200, 200, ball, p, s2);
-	ge.add(b);
+	ge ->add(b);
 
-	ge.setFps(100);
+	ge ->setFps(400);
 
-
-	// -----------------OBS!!!!!------------------ 
-	/*
-	SDL_Rect r = s->getRect();
-	int* y = &r.y;
-	cout << *y << endl;
-
-
-	cout << "----------1-----------" << endl;
-	cout << *&r.x << endl;
-	cout << *&r.y << endl;
-	cout << *&r.w << endl;
-	cout << *&r.h << endl;
-	*/
-	cout << "----------2-----------" << endl;
-	SDL_Rect r2 = s2->getRect();
-	cout << *&r2.x << endl;
-	cout << *&r2.y << endl;
-	cout << *&r2.w << endl;
-	cout << *&r2.h << endl;
-
-	cout << "----------3-----------" << endl;
-	SDL_Rect r3 = p->getRect();
-	cout << *&r3.x << endl;
-	cout << *&r3.y << endl;
-	cout << *&r3.w << endl;
-	cout << *&r3.h << endl;
-
-	cout << "----------4-----------" << endl;
-	SDL_Rect r4 = b->getRect();
-	cout << *&r4.x << endl;
-	cout << *&r4.y << endl;
-	cout << *&r4.w << endl;
-	cout << *&r4.h << endl;
-	//--------------------------------------------
-
-	ge.run();
+	ge ->run();
 	return 0;
 };
 

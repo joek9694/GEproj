@@ -27,7 +27,7 @@ public:
 	void perform(Button* source) {
 		value--;
 		label->setText(to_string(value));
-		source->setRectX(-15);		// Flytta bilden??
+		source->setRectX(getRect().x -15);		// Flytta bilden??
 	}
 private:
 	Label * label;

@@ -10,7 +10,7 @@ namespace ge {
 	class Sprite
 	{
 	public:
-		~Sprite();
+		virtual ~Sprite();
 		virtual void draw() const;
 		virtual void tick(GameEngine*) = 0;
 		virtual void perform(Sprite* source) {};
@@ -22,12 +22,11 @@ namespace ge {
 
 
 	protected:
-		Sprite(int x, int y, int w, int h, SDL_Surface* s);		//BEHÖVS?
+		Sprite(int x, int y, int w, int h, SDL_Surface* s);
 		Sprite(SDL_Surface* s);
 
 	private: 
-		SDL_Texture* texture;
-		SDL_Surface* surf;
+		SDL_Texture* texture;			
 		SDL_Rect rect;
 		Sprite(const Sprite&) = delete;		// Förbjud tilldelning
 		const Sprite& operator=
